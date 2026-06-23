@@ -51,7 +51,7 @@ from prompt_builder import build_generation_prompt
 # ----------------------------------
 
 st.set_page_config(
-    page_title="HeritageAI",
+    page_title="문양담",
     page_icon="🏯",
     layout="wide"
 )
@@ -61,7 +61,7 @@ st.set_page_config(
 # 제목
 # ----------------------------------
 
-st.title("🏯 HeritageAI")
+st.title("❃ 문양담 ❃")
 st.subheader("AI 기반 개인 맞춤형 전통문양 생성 서비스")
 
 st.write(
