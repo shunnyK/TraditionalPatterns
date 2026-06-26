@@ -61,44 +61,64 @@ def recommend_patterns(meaning_keywords, emotion_keywords, motif_keywords=None, 
     return result
 
 def find_image_path(file_name):
+    import glob
+    import re
 
     BASE_DIR = "assets/preview_images"
 
     file_name = str(file_name).strip()
 
-    # 1. file_name 그대로 찾기
-
+    # 1. 파일명 그대로 찾기
     exact_path = os.path.join(
-
         BASE_DIR,
-
         file_name
-
     )
 
     if os.path.exists(exact_path):
-
         return exact_path
 
-    # 2. 확장자/대소문자 문제 대비
-
+    # 2. 확장자 제거 후 찾기
     file_stem = os.path.splitext(file_name)[0]
 
     candidates = glob.glob(
-
         os.path.join(
-
             BASE_DIR,
-
             file_stem + ".*"
-
         )
-
     )
 
     if candidates:
-
         return candidates[0]
+
+    # 3. 파일명 안의 숫자 추출 후 S00xxxx 패턴으로 찾기
+    numbers = re.findall(
+        r"\d+",
+        file_name
+    )
+
+    for number in numbers:
+
+        number = number[-6:]
+        padded = number.zfill(6)
+
+        patterns = [
+            f"*S{padded}*",
+            f"*S0{padded}*",
+            f"*{padded}*",
+            f"*{number}*"
+        ]
+
+        for pattern in patterns:
+
+            candidates = glob.glob(
+                os.path.join(
+                    BASE_DIR,
+                    pattern
+                )
+            )
+
+            if candidates:
+                return candidates[0]
 
     return None
 

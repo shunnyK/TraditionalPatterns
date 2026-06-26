@@ -324,7 +324,10 @@ if "results" in st.session_state:
 
         st.divider()
         st.subheader(f"TOP {rank} · {row['title']}")
-
+        
+        
+        
+        st.write(row["file_name"])
         image_path = find_image_path(row["file_name"])
 
         col1, col2 = st.columns([1, 2])
