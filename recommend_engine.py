@@ -62,13 +62,15 @@ def recommend_patterns(meaning_keywords, emotion_keywords, motif_keywords=None, 
 
 def find_image_path(file_name):
 
-    BASE_DIR = "/Users/seohyeon/Desktop/shunny/personal_project/TraditionalPatterns/test/원천데이터"
+    BASE_DIR = "assets/preview_images"
 
-    for root, dirs, files in os.walk(BASE_DIR):
+    image_path = os.path.join(
+        BASE_DIR,
+        str(file_name).strip()
+    )
 
-        if file_name in files:
-
-            return os.path.join(root, file_name)
+    if os.path.exists(image_path):
+        return image_path
 
     return None
 

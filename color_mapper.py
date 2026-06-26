@@ -58,7 +58,12 @@ COLOR_MAP = {
     "검정": "black",
     "검은색": "black",
     "회색": "gray",
-    "은색": "silver"
+    "은색": "silver",
+    
+    "단청홍" : "dancheong red",
+    "황토색": "ochre yellow",
+    "먹색": "ink black",
+    "금색": "gold",
 }
 
 

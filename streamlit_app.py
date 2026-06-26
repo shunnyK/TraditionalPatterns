@@ -195,14 +195,29 @@ designer_style = ""
 
 if user_mode == "디자이너 모드":
 
+    st.write("### 🎨 추천 전통 색상")
+
+    traditional_color_options = [
+        "단청홍",
+        "남색",
+        "옥색",
+        "황토색",
+        "자주색",
+        "먹색",
+        "아이보리",
+        "금색"
+    ]
+
+    selected_traditional_colors = st.multiselect(
+        "사용하고 싶은 전통 색상을 선택해주세요",
+        traditional_color_options,
+        placeholder="예: 남색, 옥색, 아이보리"
+    )
+
     custom_colors = st.text_input(
-        "원하는 색상을 입력해주세요",
-        placeholder="""
-        예:
-        하늘색, 연노랑, 옥색, navy blue
-        남색, 자주색
-        #6A4C93
-"""
+        "직접 색상을 입력해주세요",
+        value=", ".join(selected_traditional_colors),
+        placeholder="예: 하늘색, navy blue, #61A5C2, ivory"
     )
 
     designer_style = st.radio(
@@ -497,13 +512,19 @@ if "results" in st.session_state:
 
                 st.success("전통문양 생성 완료!")
 
-                st.image(
-                image_path,
-                caption=f"{user_name}님만의 전통문양",
-                use_container_width=True
+                resized_image_path = resize_image_for_download(
+                    image_path,
+                    download_size,
+                    "download_pattern.png"
                 )
                 
-                with open(resize_image_path, "rb") as file:
+                st.image(
+                    resized_image_path,
+                    caption=f"{user_name}님만의 전통문양",
+                    use_container_width=True
+                )
+                
+                with open(resized_image_path, "rb") as file:
                     st.download_button(
                         label="생성된 전통문양 다운로드",
                         data=file,
@@ -520,7 +541,8 @@ if "results" in st.session_state:
                         user_name,
                         user_text,
                         meaning_keywords,
-                        emotion_keywords
+                        emotion_keywords,
+                        selected_df
                     )
                 )
                 
