@@ -64,13 +64,41 @@ def find_image_path(file_name):
 
     BASE_DIR = "assets/preview_images"
 
-    image_path = os.path.join(
+    file_name = str(file_name).strip()
+
+    # 1. file_name 그대로 찾기
+
+    exact_path = os.path.join(
+
         BASE_DIR,
-        str(file_name).strip()
+
+        file_name
+
     )
 
-    if os.path.exists(image_path):
-        return image_path
+    if os.path.exists(exact_path):
+
+        return exact_path
+
+    # 2. 확장자/대소문자 문제 대비
+
+    file_stem = os.path.splitext(file_name)[0]
+
+    candidates = glob.glob(
+
+        os.path.join(
+
+            BASE_DIR,
+
+            file_stem + ".*"
+
+        )
+
+    )
+
+    if candidates:
+
+        return candidates[0]
 
     return None
 
