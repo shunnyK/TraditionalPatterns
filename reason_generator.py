@@ -1,3 +1,4 @@
+print("reason_generator loaded")
 from symbol_mapper import (
     get_symbolic_motifs
 )
