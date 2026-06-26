@@ -329,9 +329,7 @@ if "results" in st.session_state:
         
         st.write(row["file_name"])
         image_path = find_image_path(row["file_name"])
-        st.write("file_name:", row["file_name"])
-        st.write("image_path:", image_path)
-
+       
         col1, col2 = st.columns([1, 2])
 
         with col1:
