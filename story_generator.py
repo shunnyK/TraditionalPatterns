@@ -1,14 +1,57 @@
+import pandas as pd
+
 from symbol_mapper import (
     get_symbolic_motifs
 )
+
+
+def clean_items(
+    values
+):
+
+    result = []
+
+    for value in values:
+
+        if pd.isna(value):
+            continue
+
+        for item in str(value).split("|"):
+
+            item = item.strip()
+
+            if not item:
+                continue
+
+            if item.lower() == "nan":
+                continue
+
+            result.append(item)
+
+    return list(
+        dict.fromkeys(result)
+    )
 
 
 def generate_story(
     user_name,
     user_text,
     meaning_keywords,
-    emotion_keywords
+    emotion_keywords,
+    selected_df=None
 ):
+
+    if not meaning_keywords and selected_df is not None:
+
+        meaning_keywords = clean_items(
+            selected_df["meaning"]
+        )[:5]
+
+    if not emotion_keywords and selected_df is not None:
+
+        emotion_keywords = clean_items(
+            selected_df["emotion"]
+        )[:5]
 
     symbolic_motifs = get_symbolic_motifs(
         meaning_keywords
@@ -23,16 +66,28 @@ def generate_story(
         else:
             top_symbols.append(item)
 
-    meaning_text = ", ".join(
-        meaning_keywords
+    if not top_symbols and selected_df is not None:
+
+        top_symbols = clean_items(
+            selected_df["motif"]
+        )[:3]
+
+    meaning_text = (
+        ", ".join(meaning_keywords)
+        if meaning_keywords
+        else "전통적인 아름다움"
     )
 
-    emotion_text = ", ".join(
-        emotion_keywords
+    emotion_text = (
+        ", ".join(emotion_keywords)
+        if emotion_keywords
+        else "고유하고 품격 있는"
     )
 
-    motif_text = ", ".join(
-        top_symbols
+    motif_text = (
+        ", ".join(top_symbols)
+        if top_symbols
+        else "전통 상징"
     )
 
     story = f"""

@@ -560,6 +560,7 @@ if "results" in st.session_state:
                         user_name,
                         user_text,
                         meaning_keywords,
-                        emotion_keywords
+                        emotion_keywords,
+                        selected_df
                     )
                 )
